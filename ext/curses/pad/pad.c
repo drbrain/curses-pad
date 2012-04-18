@@ -205,35 +205,35 @@ pad_noutrefresh(VALUE obj, VALUE pminrow, VALUE pmincol, VALUE sminrow,
 
 void
 Init_pad(void) {
-  VALUE cPad, cWindow;
+    VALUE cPad, cWindow;
 
-  rb_require("curses");
+    rb_require("curses");
 
-  if (rb_path2class("Curses::Pad"))
+    if (rb_path2class("Curses::Pad"))
 	return;
 
-  mCurses = rb_path2class("Curses");
-  cWindow = rb_path2class("Curses::Window");
+    mCurses = rb_path2class("Curses");
+    cWindow = rb_path2class("Curses::Window");
 
-  /*
-   * Document-class: Curses::Pad
-   *
-   * == Description
-   *
-   * A Pad is like a Window but allows for scrolling of contents that cannot
-   * fit on the screen.  Pads do not refresh automatically, use Pad#refresh
-   * or Pad#noutrefresh instead.
-   *
-   */
-  cPad = rb_define_class_under(mCurses, "Pad", cWindow);
+    /*
+     * Document-class: Curses::Pad
+     *
+     * == Description
+     *
+     * A Pad is like a Window but allows for scrolling of contents that cannot
+     * fit on the screen.  Pads do not refresh automatically, use Pad#refresh
+     * or Pad#noutrefresh instead.
+     *
+     */
+    cPad = rb_define_class_under(mCurses, "Pad", cWindow);
 
-  /* remember to update Rakefile */
-  rb_const_set(cPad, rb_intern("VERSION"), rb_str_new2("1.0"));
+    /* remember to update Rakefile */
+    rb_const_set(cPad, rb_intern("VERSION"), rb_str_new2("1.0"));
 
-  /* inherits alloc_func from cWindow */
-  rb_define_method(cPad, "initialize", pad_initialize, 2);
-  rb_define_method(cPad, "subpad", pad_subpad, 4);
-  rb_define_method(cPad, "refresh", pad_refresh, 6);
-  rb_define_method(cPad, "noutrefresh", pad_noutrefresh, 6);
-  rb_undef_method(cPad, "subwin");
+    /* inherits alloc_func from cWindow */
+    rb_define_method(cPad, "initialize", pad_initialize, 2);
+    rb_define_method(cPad, "subpad", pad_subpad, 4);
+    rb_define_method(cPad, "refresh", pad_refresh, 6);
+    rb_define_method(cPad, "noutrefresh", pad_noutrefresh, 6);
+    rb_undef_method(cPad, "subwin");
 }
