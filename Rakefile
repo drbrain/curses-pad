@@ -2,7 +2,11 @@
 
 require 'rubygems'
 require 'hoe'
-require 'rake/extensiontask'
+begin
+  require 'rake/extensiontask'
+rescue LoadError
+  warn 'run: rake check_extra_deps'
+end
 
 Hoe.plugin :minitest
 Hoe.plugin :git
