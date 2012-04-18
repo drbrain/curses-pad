@@ -6,6 +6,14 @@ rescue LoadError
   abort "could not require 'curses', make sure your ruby was built with curses"
 end
 
+def have_feature name, header, library, fatal = true
+  feature = have_func(name) or have_macro(name, headers)
+
+  return unless fatal
+
+  abort "unable to find #{name}() in #{header} and #{library}" unless feature
+end
+
 dir_config 'curses'
 dir_config 'ncurses'
 
@@ -41,10 +49,8 @@ puts
 headers = [header]
 headers.unshift "varargs.h" if header == "curses_colr/curses.h"
 
-newpad = have_func("newpad") or
-         have_macro("newpad", headers)
-
-abort "unable to find newpad() in #{header} and #{library}" unless newpad
+have_feature "newpad",   headers, library
+have_feature "doupdate", headers, library, false
 
 puts
 create_header

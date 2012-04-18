@@ -23,7 +23,6 @@ struct windata {
   WINDOW *window;
 };
 
-
 static void
 no_window(void)
 {
@@ -33,7 +32,7 @@ no_window(void)
 #define GetWINDOW(obj, winp) do {\
     if (!OBJ_TAINTED(obj) && rb_safe_level() >= 4)\
 	rb_raise(rb_eSecurityError, "Insecure: operation on untainted window");\
-    TypedData_Get_Struct((obj), struct windata, &windata_type, (winp));\
+    Data_Get_Struct((obj), struct windata, (winp));\
     if ((winp)->window == 0) no_window();\
 } while (0)
 
@@ -56,11 +55,6 @@ window_memsize(const void *p)
     return size;
 }
 
-static const rb_data_type_t windata_type = {
-    "windata",
-    {0, window_free, window_memsize,}
-};
-
 static VALUE
 prep_window(VALUE class, WINDOW *window)
 {
@@ -72,7 +66,7 @@ prep_window(VALUE class, WINDOW *window)
     }
 
     obj = rb_obj_alloc(class);
-    TypedData_Get_Struct(obj, struct windata, &windata_type, winp);
+    Data_Get_Struct(obj, struct windata, winp);
     winp->window = window;
 
     return obj;
@@ -108,6 +102,7 @@ pad_initialize(VALUE obj, VALUE h, VALUE w)
 
 /*
  * Document-method: Curses::Pad.subwin
+ *
  * call-seq:
  *   subpad(height, width, begin_x, begin_y)
  *
@@ -205,14 +200,15 @@ pad_noutrefresh(VALUE obj, VALUE pminrow, VALUE pmincol, VALUE sminrow,
 
 void
 Init_pad(void) {
-    VALUE cPad, cWindow;
+    VALUE cWindow, cPad;
 
     rb_require("curses");
 
-    if (rb_path2class("Curses::Pad"))
+    mCurses = rb_path2class("Curses");
+
+    if (rb_const_defined_at(mCurses, rb_intern("Pad")))
 	return;
 
-    mCurses = rb_path2class("Curses");
     cWindow = rb_path2class("Curses::Window");
 
     /*
