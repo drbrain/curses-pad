@@ -17,7 +17,7 @@ hoe = Hoe.spec 'curses-pad' do
   extra_dev_deps << ['rake-compiler', '~> 0.8', '>= 0.8.1']
 
   spec_extras['extensions']            = %w[ext/curses/pad/extconf.rb]
-  spec_extras['required_ruby_version'] = '~> 1.9.2'
+  spec_extras['required_ruby_version'] = '>= 1.9.2'
 end
 
 begin

@@ -209,6 +209,9 @@ Init_pad(void) {
 
   rb_require("curses");
 
+  if (rb_path2class("Curses::Pad"))
+	return;
+
   mCurses = rb_path2class("Curses");
   cWindow = rb_path2class("Curses::Window");
 
