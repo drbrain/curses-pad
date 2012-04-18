@@ -23,4 +23,6 @@ Rake::ExtensionTask.new 'pad', hoe.spec do |ext|
   ext.lib_dir = 'lib/curses'
 end
 
+task default: :compile
+
 # vim: syntax=ruby
