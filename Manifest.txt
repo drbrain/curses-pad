@@ -5,3 +5,4 @@ README.rdoc
 Rakefile
 ext/curses/pad/extconf.rb
 ext/curses/pad/pad.c
+test/test_curses_pad.rb
