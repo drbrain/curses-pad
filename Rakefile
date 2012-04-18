@@ -35,6 +35,6 @@ end
 
 task default: :compile
 
-task test: :compile do end
+task test: :compile
 
 # vim: syntax=ruby
