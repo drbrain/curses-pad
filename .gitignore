@@ -1,0 +1,9 @@
+*.rbc
+*.swp
+/TAGS
+/doc
+/lib/curses/pad.bundle
+/lib/curses/pad.dll
+/lib/curses/pad.so
+/pkg
+/tmp

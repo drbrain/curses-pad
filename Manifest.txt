@@ -1,0 +1,7 @@
+.autotest
+History.rdoc
+Manifest.txt
+README.rdoc
+Rakefile
+ext/curses/pad/extconf.rb
+ext/curses/pad/pad.c
