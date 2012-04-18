@@ -6,6 +6,7 @@ require 'rake/extensiontask'
 
 Hoe.plugin :minitest
 Hoe.plugin :git
+Hoe.plugin :travis
 
 hoe = Hoe.spec 'curses-pad' do
   self.version = '1.0' # remember to update pad.c
@@ -24,5 +25,7 @@ Rake::ExtensionTask.new 'pad', hoe.spec do |ext|
 end
 
 task default: :compile
+
+task test: :compile do end
 
 # vim: syntax=ruby
