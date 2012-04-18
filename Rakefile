@@ -2,11 +2,6 @@
 
 require 'rubygems'
 require 'hoe'
-begin
-  require 'rake/extensiontask'
-rescue LoadError
-  warn 'run: rake check_extra_deps'
-end
 
 Hoe.plugin :minitest
 Hoe.plugin :git
@@ -25,9 +20,17 @@ hoe = Hoe.spec 'curses-pad' do
   spec_extras['required_ruby_version'] = '~> 1.9.2'
 end
 
-Rake::ExtensionTask.new 'pad', hoe.spec do |ext|
-  ext.ext_dir = 'ext/curses/pad'
-  ext.lib_dir = 'lib/curses'
+begin
+  require 'rake/extensiontask'
+
+  Rake::ExtensionTask.new 'pad', hoe.spec do |ext|
+    ext.ext_dir = 'ext/curses/pad'
+    ext.lib_dir = 'lib/curses'
+  end
+rescue LoadError
+  task :compile do
+    abort 'run: rake check_extra_deps'
+  end
 end
 
 task default: :compile
